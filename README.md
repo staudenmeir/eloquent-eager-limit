@@ -22,7 +22,7 @@ Supports Laravel 5.5.29+.
 
 ## Usage
 
-Use the `HasEagerLimit` trait on both the parent and the related model. 
+Use the `HasEagerLimit` trait in both the parent and the related model. 
 
 ```php
 class User extends Model
@@ -41,4 +41,27 @@ class Post extends Model
 }
 
 $users = User::with('posts')->get();
+```
+
+You can also set the limit dynamically:
+
+```php
+class User extends Model
+{
+    use \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
+}
+
+class Post extends Model
+{
+    use \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+}
+
+$users = User::with(['posts' => function ($query) {
+    $query->latest()->limit(10);
+}])->get();
 ```
