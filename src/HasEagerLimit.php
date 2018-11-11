@@ -35,6 +35,7 @@ trait HasEagerLimit
             $connection, $grammar, $connection->getPostProcessor()
         );
     }
+
     /**
      * Get the query grammar.
      *

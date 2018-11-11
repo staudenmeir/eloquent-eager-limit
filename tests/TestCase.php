@@ -3,7 +3,7 @@
 namespace Tests;
 
 use Carbon\Carbon;
-use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use PHPUnit\Framework\TestCase as Base;
@@ -20,14 +20,14 @@ abstract class TestCase extends Base
     {
         parent::setUp();
 
-        $capsule = new Capsule;
-        $capsule->addConnection([
+        $db = new DB;
+        $db->addConnection([
             'driver' => 'mysql',
             'host' => '127.0.0.1',
             'port' => '3306',
             'database' => 'test',
             'username' => 'root',
-            'password' => 'password',
+            'password' => '',
             'unix_socket' => '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -35,49 +35,49 @@ abstract class TestCase extends Base
             'strict' => true,
             'engine' => null,
         ]);
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
+        $db->setAsGlobal();
+        $db->bootEloquent();
 
-        Capsule::schema()->dropAllTables();
+        DB::schema()->dropAllTables();
 
-        Capsule::schema()->create('countries', function (Blueprint $table) {
+        DB::schema()->create('countries', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
 
-        Capsule::schema()->create('users', function (Blueprint $table) {
+        DB::schema()->create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('country_id');
         });
 
-        Capsule::schema()->create('posts', function (Blueprint $table) {
+        DB::schema()->create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->timestamps();
         });
 
-        Capsule::schema()->create('comments', function (Blueprint $table) {
+        DB::schema()->create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->morphs('commentable');
             $table->timestamps();
         });
 
-        Capsule::schema()->create('roles', function (Blueprint $table) {
+        DB::schema()->create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
 
-        Capsule::schema()->create('role_user', function (Blueprint $table) {
+        DB::schema()->create('role_user', function (Blueprint $table) {
             $table->unsignedInteger('role_id');
             $table->unsignedInteger('user_id');
         });
 
-        Capsule::schema()->create('tags', function (Blueprint $table) {
+        DB::schema()->create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
 
-        Capsule::schema()->create('taggables', function (Blueprint $table) {
+        DB::schema()->create('taggables', function (Blueprint $table) {
             $table->unsignedInteger('tag_id');
             $table->morphs('taggable');
         });
@@ -134,7 +134,7 @@ abstract class TestCase extends Base
             Role::create(['created_at' => new Carbon('2018-01-01 00:00:05')]);
             Role::create(['created_at' => new Carbon('2018-01-01 00:00:06')]);
 
-            Capsule::table('role_user')->insert([
+            DB::table('role_user')->insert([
                 ['role_id' => 1, 'user_id' => 1],
                 ['role_id' => 2, 'user_id' => 1],
                 ['role_id' => 3, 'user_id' => 1],
@@ -150,7 +150,7 @@ abstract class TestCase extends Base
             Tag::create(['created_at' => new Carbon('2018-01-01 00:00:05')]);
             Tag::create(['created_at' => new Carbon('2018-01-01 00:00:06')]);
 
-            Capsule::table('taggables')->insert([
+            DB::table('taggables')->insert([
                 ['tag_id' => 1, 'taggable_type' => Post::class, 'taggable_id' => 1],
                 ['tag_id' => 2, 'taggable_type' => Post::class, 'taggable_id' => 1],
                 ['tag_id' => 3, 'taggable_type' => Post::class, 'taggable_id' => 1],
