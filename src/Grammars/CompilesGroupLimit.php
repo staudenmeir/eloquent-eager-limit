@@ -14,7 +14,7 @@ trait CompilesGroupLimit
      */
     public function compileSelect(Builder $query)
     {
-        if ($query->groupLimit) {
+        if (isset($query->groupLimit)) {
             if (is_null($query->columns)) {
                 $query->columns = ['*'];
             }
