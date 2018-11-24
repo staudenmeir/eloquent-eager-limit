@@ -23,7 +23,7 @@ class MySqlGrammar extends Base
     {
         $version = $query->getConnection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
 
-        if (version_compare($version, '8.0.11') >= 0 || Str::contains($version, 'MariaDB')) {
+        if (version_compare($version, '8.0.2') >= 0 || Str::contains($version, 'MariaDB')) {
             return $this->compileGroupLimitParent($query);
         }
 
