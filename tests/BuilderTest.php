@@ -12,13 +12,13 @@ class BuilderTest extends TestCase
     public function testGroupLimitMySql()
     {
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.11');
+        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.2');
         $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.11');
+        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.2');
         $builder->select('id', 'user_id')->from('posts')->latest()->groupLimit(10, 'user_id');
         $expected = 'select * from (select `id`, `user_id`, row_number() over (partition by `user_id` order by `created_at` desc) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
