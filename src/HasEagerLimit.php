@@ -102,7 +102,7 @@ trait HasEagerLimit
         return new HasMany($query, $parent, $foreignKey, $localKey);
     }
 
-        /**
+    /**
      * Instantiate a new HasManyThrough relationship.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
