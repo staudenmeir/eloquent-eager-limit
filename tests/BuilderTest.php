@@ -13,7 +13,7 @@ class BuilderTest extends TestCase
     {
         $builder = $this->getBuilder('MySql');
         $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.11');
-        $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
+        $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
@@ -25,7 +25,7 @@ class BuilderTest extends TestCase
 
         $builder = $this->getBuilder('MySql');
         $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.7.9');
-        $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
+        $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select * from `posts` order by `user_id` asc) as laravel_table having laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
@@ -46,7 +46,7 @@ class BuilderTest extends TestCase
     {
         $builder = $this->getBuilder('MySql');
         $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
-        $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
+        $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
@@ -60,7 +60,7 @@ class BuilderTest extends TestCase
     public function testGroupLimitPostgres()
     {
         $builder = $this->getBuilder('Postgres');
-        $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
+        $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by "user_id") as laravel_row from "posts") as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
@@ -74,7 +74,7 @@ class BuilderTest extends TestCase
     {
         $builder = $this->getBuilder('SQLite');
         $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('3.25.0');
-        $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
+        $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by "user_id") as laravel_row from "posts") as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
@@ -86,7 +86,7 @@ class BuilderTest extends TestCase
 
         $builder = $this->getBuilder('SQLite');
         $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('3.24.0');
-        $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
+        $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from "posts"';
         $this->assertEquals($expected, $builder->toSql());
     }
@@ -94,7 +94,7 @@ class BuilderTest extends TestCase
     public function testGroupLimitSqlServer()
     {
         $builder = $this->getBuilder('SqlServer');
-        $builder->select('*')->from('posts')->groupLimit(10, 'user_id');
+        $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by [user_id] order by (select 0)) as laravel_row from [posts]) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
