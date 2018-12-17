@@ -9,7 +9,7 @@ use PDO;
 class SQLiteGrammar extends Base
 {
     use CompilesGroupLimit {
-        compileGroupLimit as protected compileGroupLimitParent;
+        compileGroupLimit as compileGroupLimitParent;
     }
 
     /**

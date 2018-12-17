@@ -10,7 +10,7 @@ use PDO;
 class MySqlGrammar extends Base
 {
     use CompilesGroupLimit {
-        compileGroupLimit as protected compileGroupLimitParent;
+        compileGroupLimit as compileGroupLimitParent;
     }
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Database\Query\Grammars\SqlServerGrammar as Base;
 class SqlServerGrammar extends Base
 {
     use CompilesGroupLimit {
-        compileRowNumber as protected compileRowNumberParent;
+        compileRowNumber as compileRowNumberParent;
     }
 
     /**
