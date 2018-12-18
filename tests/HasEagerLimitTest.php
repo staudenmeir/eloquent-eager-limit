@@ -14,6 +14,8 @@ class HasEagerLimitTest extends TestCase
 
         $this->assertEquals(3, $users[0]->post->id);
         $this->assertEquals(6, $users[1]->post->id);
+        $this->assertArrayNotHasKey('laravel_row', $users[0]->post);
+        $this->assertArrayNotHasKey('@laravel_partition := `user_id`', $users[0]->post);
     }
 
     public function testMorphOne()
@@ -54,6 +56,7 @@ class HasEagerLimitTest extends TestCase
 
         $this->assertEquals([3, 2], $users[0]->roles->pluck('id')->all());
         $this->assertEquals([6, 5], $users[1]->roles->pluck('id')->all());
+        $this->assertArrayNotHasKey('@laravel_partition := `pivot_user_id`', $users[0]->roles[0]);
     }
 
     public function testMorphToMany()
