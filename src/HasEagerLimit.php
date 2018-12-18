@@ -41,8 +41,6 @@ trait HasEagerLimit
      *
      * @param  \Illuminate\Database\Connection  $connection
      * @return \Illuminate\Database\Query\Grammars\Grammar
-     *
-     * @codeCoverageIgnore
      */
     protected function getQueryGrammar(Connection $connection) {
         $driver = $connection->getDriverName();
@@ -58,7 +56,7 @@ trait HasEagerLimit
                 return new SqlServerGrammar;
         }
 
-        throw new RuntimeException('This database is not supported.');
+        throw new RuntimeException('This database is not supported.'); // @codeCoverageIgnore
     }
 
     /**

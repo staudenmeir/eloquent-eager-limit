@@ -24,11 +24,11 @@ matrix:
       env: COVERAGE=yes
     - php: 7.2
       env: RELEASE=lowest
+    - php: 7.2
+      env: COVERAGE=yes DB=pgsql
     - php: 7.3
     - php: 7.3
       env: RELEASE=lowest
-    - php: 7.3
-      env: DB=pgsql
 
 cache:
   directories:
