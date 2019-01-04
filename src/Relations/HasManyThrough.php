@@ -16,7 +16,11 @@ class HasManyThrough extends Base
      */
     public function limit($value)
     {
-        $this->query->groupLimit($value, $this->getQualifiedFirstKeyName());
+        if ($this->farParent->exists) {
+            $this->query->limit($value);
+        } else {
+            $this->query->groupLimit($value, $this->getQualifiedFirstKeyName());
+        }
 
         return $this;
     }

@@ -23,7 +23,11 @@ trait HasLimit
      */
     public function limit($value)
     {
-        $this->query->groupLimit($value, $this->getExistenceCompareKey());
+        if ($this->parent->exists) {
+            $this->query->limit($value);
+        } else {
+            $this->query->groupLimit($value, $this->getExistenceCompareKey());
+        }
 
         return $this;
     }
