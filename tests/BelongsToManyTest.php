@@ -22,6 +22,14 @@ class BelongsToManyTest extends TestCase
         $this->assertArrayNotHasKey('@laravel_partition := `pivot_user_id`', $users[0]->roles[0]);
     }
 
+    public function testEagerLoadingWithOffset()
+    {
+        $users = User::with('rolesWithOffset')->get();
+
+        $this->assertEquals([2, 1], $users[0]->rolesWithOffset->pluck('id')->all());
+        $this->assertEquals([5, 4], $users[1]->rolesWithOffset->pluck('id')->all());
+    }
+
     public function testLazyEagerLoading()
     {
         $users = User::all()->load('roles');

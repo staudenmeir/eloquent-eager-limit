@@ -21,6 +21,14 @@ class MorphOneTest extends TestCase
         $this->assertEquals(6, $posts[1]->comment->id);
     }
 
+    public function testEagerLoadingWithOffset()
+    {
+        $posts = Post::with('commentWithOffset')->get();
+
+        $this->assertEquals(2, $posts[0]->commentWithOffset->id);
+        $this->assertEquals(5, $posts[1]->commentWithOffset->id);
+    }
+
     public function testLazyEagerLoading()
     {
         $posts = Post::all()->load('comment');

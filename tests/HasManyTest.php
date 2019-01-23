@@ -23,6 +23,14 @@ class HasManyTest extends TestCase
         $this->assertArrayNotHasKey('@laravel_partition := `user_id`', $users[0]->post);
     }
 
+    public function testEagerLoadingWithOffset()
+    {
+        $users = User::with('postsWithOffset')->get();
+
+        $this->assertEquals([2, 1], $users[0]->postsWithOffset->pluck('id')->all());
+        $this->assertEquals([5, 4], $users[1]->postsWithOffset->pluck('id')->all());
+    }
+
     public function testLazyEagerLoading()
     {
         $users = User::all()->load('posts');

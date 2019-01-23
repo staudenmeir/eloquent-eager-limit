@@ -21,6 +21,14 @@ class MorphToManyTest extends TestCase
         $this->assertEquals([6, 5], $posts[1]->tags->pluck('id')->all());
     }
 
+    public function testEagerLoadingWithOffset()
+    {
+        $posts = Post::with('tagsWithOffset')->get();
+
+        $this->assertEquals([2, 1], $posts[0]->tagsWithOffset->pluck('id')->all());
+        $this->assertEquals([5, 4], $posts[1]->tagsWithOffset->pluck('id')->all());
+    }
+
     public function testLazyEagerLoading()
     {
         $posts = Post::all()->load('tags');

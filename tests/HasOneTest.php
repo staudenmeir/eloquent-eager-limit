@@ -21,6 +21,14 @@ class HasOneTest extends TestCase
         $this->assertEquals(6, $users[1]->post->id);
     }
 
+    public function testEagerLoadingWithOffset()
+    {
+        $users = User::with('postWithOffset')->get();
+
+        $this->assertEquals(2, $users[0]->postWithOffset->id);
+        $this->assertEquals(5, $users[1]->postWithOffset->id);
+    }
+
     public function testLazyEagerLoading()
     {
         $users = User::all()->load('post');

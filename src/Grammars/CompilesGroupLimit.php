@@ -33,6 +33,16 @@ trait CompilesGroupLimit
      */
     protected function compileGroupLimit(Builder $query)
     {
+        $limit = (int) $query->groupLimit['value'];
+
+        $offset = $query->offset;
+
+        if (isset($offset)) {
+            $limit += (int) $offset;
+
+            $query->offset = null;
+        }
+
         $components = $this->compileComponents($query);
 
         $components['columns'] .= $this->compileRowNumber($query->groupLimit['column'], $components['orders'] ?? '');
@@ -41,9 +51,13 @@ trait CompilesGroupLimit
 
         $sql = $this->concatenate($components);
 
-        $limit = (int) $query->groupLimit['value'];
+        $sql = 'select * from ('.$sql.') as laravel_table where laravel_row <= '.$limit;
 
-        return 'select * from ('.$sql.') as laravel_table where laravel_row <= '.$limit.' order by laravel_row';
+        if (isset($offset)) {
+            $sql .= ' and laravel_row > '.(int) $offset;
+        }
+
+        return $sql.' order by laravel_row';
     }
 
     /**

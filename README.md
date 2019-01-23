@@ -24,7 +24,7 @@ Supports Laravel 5.5.29+.
 
 ## Usage
 
-Use the `HasEagerLimit` trait in both the parent and the related model and apply `limit()/take()` to your relationship. 
+Use the `HasEagerLimit` trait in both the parent and the related model and apply `limit()/take()` to your relationship:
 
 ```php
 class User extends Model
@@ -47,7 +47,7 @@ $users = User::with(['posts' => function ($query) {
 }])->get();
 ```
 
-Improve the performance of `HasOne`/`MorphOne` relationships by applying `limit(1)`: 
+Improve the performance of `HasOne`/`MorphOne` relationships by applying `limit(1)`:
 
 ```php
 class User extends Model
@@ -66,4 +66,27 @@ class Post extends Model
 }
 
 $users = User::with('latestPost')->get();
+```
+
+You can also apply `offset()/skip()` to your relationship: 
+
+```php
+class User extends Model
+{
+    use \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
+}
+
+class Post extends Model
+{
+    use \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+}
+
+$users = User::with(['posts' => function ($query) {
+    $query->latest()->offset(5)->limit(10);
+}])->get();
 ```

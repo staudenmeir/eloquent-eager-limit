@@ -40,6 +40,16 @@ class MySqlGrammar extends Base
      */
     protected function compileLegacyGroupLimit(Builder $query)
     {
+        $limit = (int) $query->groupLimit['value'];
+
+        $offset = $query->offset;
+
+        if (isset($offset)) {
+            $limit += (int) $offset;
+
+            $query->offset = null;
+        }
+
         $column = Str::after($query->groupLimit['column'], '.');
 
         if ($query->joins && Str::contains(end($query->columns), ' as pivot_')) {
@@ -64,8 +74,14 @@ class MySqlGrammar extends Base
 
         $from = '(select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, ('.$sql.') as laravel_table';
 
-        $limit = (int) $query->groupLimit['value'];
+        $sql = 'select laravel_table.*'.$partition.' from '.$from.' having laravel_row <= '.$limit;
 
-        return 'select laravel_table.*'.$partition.' from '.$from.' having laravel_row <= '.$limit.' order by laravel_row';
+        if (isset($offset)) {
+            $sql .= ' and laravel_row > '.(int) $offset;
+        }
+
+        return $sql.' order by laravel_row';
+
+
     }
 }

@@ -21,6 +21,14 @@ class HasManyThroughTest extends TestCase
         $this->assertEquals([6, 5], $countries[1]->posts->pluck('id')->all());
     }
 
+    public function testEagerLoadingWithOffset()
+    {
+        $countries = Country::with('postsWithOffset')->get();
+
+        $this->assertEquals([2, 1], $countries[0]->postsWithOffset->pluck('id')->all());
+        $this->assertEquals([5, 4], $countries[1]->postsWithOffset->pluck('id')->all());
+    }
+
     public function testLazyEagerLoading()
     {
         $countries = Country::all()->load('posts');
