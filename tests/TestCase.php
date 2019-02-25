@@ -27,6 +27,18 @@ abstract class TestCase extends Base
         $db->setAsGlobal();
         $db->bootEloquent();
 
+        $this->migrate();
+
+        $this->seed();
+    }
+
+    /**
+     * Migrate the database.
+     *
+     * @return void
+     */
+    protected function migrate()
+    {
         DB::schema()->dropAllTables();
 
         DB::schema()->create('countries', function (Blueprint $table) {
@@ -70,83 +82,93 @@ abstract class TestCase extends Base
             $table->unsignedInteger('tag_id');
             $table->morphs('taggable');
         });
+    }
 
-        Model::unguarded(function () {
-            Country::create();
-            Country::create();
+    /**
+     * Seed the database.
+     *
+     * @return void
+     */
+    protected function seed()
+    {
+        Model::unguard();
 
-            User::create(['country_id' => 1]);
-            User::create(['country_id' => 2]);
+        Country::create();
+        Country::create();
 
-            Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:01')]);
-            Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:02')]);
-            Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:03')]);
-            Post::create(['user_id' => 2, 'created_at' => new Carbon('2018-01-01 00:00:04')]);
-            Post::create(['user_id' => 2, 'created_at' => new Carbon('2018-01-01 00:00:05')]);
-            Post::create(['user_id' => 2, 'created_at' => new Carbon('2018-01-01 00:00:06')]);
+        User::create(['country_id' => 1]);
+        User::create(['country_id' => 2]);
 
-            Comment::create([
-                'commentable_type' => Post::class,
-                'commentable_id' => 1,
-                'created_at' => new Carbon('2018-01-01 00:00:01'),
-            ]);
-            Comment::create([
-                'commentable_type' => Post::class,
-                'commentable_id' => 1,
-                'created_at' => new Carbon('2018-01-01 00:00:02'),
-            ]);
-            Comment::create([
-                'commentable_type' => Post::class,
-                'commentable_id' => 1,
-                'created_at' => new Carbon('2018-01-01 00:00:03'),
-            ]);
-            Comment::create([
-                'commentable_type' => Post::class,
-                'commentable_id' => 2,
-                'created_at' => new Carbon('2018-01-01 00:00:04'),
-            ]);
-            Comment::create([
-                'commentable_type' => Post::class,
-                'commentable_id' => 2,
-                'created_at' => new Carbon('2018-01-01 00:00:05'),
-            ]);
-            Comment::create([
-                'commentable_type' => Post::class,
-                'commentable_id' => 2,
-                'created_at' => new Carbon('2018-01-01 00:00:06'),
-            ]);
+        Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:01')]);
+        Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:02')]);
+        Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:03')]);
+        Post::create(['user_id' => 2, 'created_at' => new Carbon('2018-01-01 00:00:04')]);
+        Post::create(['user_id' => 2, 'created_at' => new Carbon('2018-01-01 00:00:05')]);
+        Post::create(['user_id' => 2, 'created_at' => new Carbon('2018-01-01 00:00:06')]);
 
-            Role::create(['created_at' => new Carbon('2018-01-01 00:00:01')]);
-            Role::create(['created_at' => new Carbon('2018-01-01 00:00:02')]);
-            Role::create(['created_at' => new Carbon('2018-01-01 00:00:03')]);
-            Role::create(['created_at' => new Carbon('2018-01-01 00:00:04')]);
-            Role::create(['created_at' => new Carbon('2018-01-01 00:00:05')]);
-            Role::create(['created_at' => new Carbon('2018-01-01 00:00:06')]);
+        Comment::create([
+            'commentable_type' => Post::class,
+            'commentable_id' => 1,
+            'created_at' => new Carbon('2018-01-01 00:00:01'),
+        ]);
+        Comment::create([
+            'commentable_type' => Post::class,
+            'commentable_id' => 1,
+            'created_at' => new Carbon('2018-01-01 00:00:02'),
+        ]);
+        Comment::create([
+            'commentable_type' => Post::class,
+            'commentable_id' => 1,
+            'created_at' => new Carbon('2018-01-01 00:00:03'),
+        ]);
+        Comment::create([
+            'commentable_type' => Post::class,
+            'commentable_id' => 2,
+            'created_at' => new Carbon('2018-01-01 00:00:04'),
+        ]);
+        Comment::create([
+            'commentable_type' => Post::class,
+            'commentable_id' => 2,
+            'created_at' => new Carbon('2018-01-01 00:00:05'),
+        ]);
+        Comment::create([
+            'commentable_type' => Post::class,
+            'commentable_id' => 2,
+            'created_at' => new Carbon('2018-01-01 00:00:06'),
+        ]);
 
-            DB::table('role_user')->insert([
-                ['role_id' => 1, 'user_id' => 1],
-                ['role_id' => 2, 'user_id' => 1],
-                ['role_id' => 3, 'user_id' => 1],
-                ['role_id' => 4, 'user_id' => 2],
-                ['role_id' => 5, 'user_id' => 2],
-                ['role_id' => 6, 'user_id' => 2],
-            ]);
+        Role::create(['created_at' => new Carbon('2018-01-01 00:00:01')]);
+        Role::create(['created_at' => new Carbon('2018-01-01 00:00:02')]);
+        Role::create(['created_at' => new Carbon('2018-01-01 00:00:03')]);
+        Role::create(['created_at' => new Carbon('2018-01-01 00:00:04')]);
+        Role::create(['created_at' => new Carbon('2018-01-01 00:00:05')]);
+        Role::create(['created_at' => new Carbon('2018-01-01 00:00:06')]);
 
-            Tag::create(['created_at' => new Carbon('2018-01-01 00:00:01')]);
-            Tag::create(['created_at' => new Carbon('2018-01-01 00:00:02')]);
-            Tag::create(['created_at' => new Carbon('2018-01-01 00:00:03')]);
-            Tag::create(['created_at' => new Carbon('2018-01-01 00:00:04')]);
-            Tag::create(['created_at' => new Carbon('2018-01-01 00:00:05')]);
-            Tag::create(['created_at' => new Carbon('2018-01-01 00:00:06')]);
+        DB::table('role_user')->insert([
+            ['role_id' => 1, 'user_id' => 1],
+            ['role_id' => 2, 'user_id' => 1],
+            ['role_id' => 3, 'user_id' => 1],
+            ['role_id' => 4, 'user_id' => 2],
+            ['role_id' => 5, 'user_id' => 2],
+            ['role_id' => 6, 'user_id' => 2],
+        ]);
 
-            DB::table('taggables')->insert([
-                ['tag_id' => 1, 'taggable_type' => Post::class, 'taggable_id' => 1],
-                ['tag_id' => 2, 'taggable_type' => Post::class, 'taggable_id' => 1],
-                ['tag_id' => 3, 'taggable_type' => Post::class, 'taggable_id' => 1],
-                ['tag_id' => 4, 'taggable_type' => Post::class, 'taggable_id' => 2],
-                ['tag_id' => 5, 'taggable_type' => Post::class, 'taggable_id' => 2],
-                ['tag_id' => 6, 'taggable_type' => Post::class, 'taggable_id' => 2],
-            ]);
-        });
+        Tag::create(['created_at' => new Carbon('2018-01-01 00:00:01')]);
+        Tag::create(['created_at' => new Carbon('2018-01-01 00:00:02')]);
+        Tag::create(['created_at' => new Carbon('2018-01-01 00:00:03')]);
+        Tag::create(['created_at' => new Carbon('2018-01-01 00:00:04')]);
+        Tag::create(['created_at' => new Carbon('2018-01-01 00:00:05')]);
+        Tag::create(['created_at' => new Carbon('2018-01-01 00:00:06')]);
+
+        DB::table('taggables')->insert([
+            ['tag_id' => 1, 'taggable_type' => Post::class, 'taggable_id' => 1],
+            ['tag_id' => 2, 'taggable_type' => Post::class, 'taggable_id' => 1],
+            ['tag_id' => 3, 'taggable_type' => Post::class, 'taggable_id' => 1],
+            ['tag_id' => 4, 'taggable_type' => Post::class, 'taggable_id' => 2],
+            ['tag_id' => 5, 'taggable_type' => Post::class, 'taggable_id' => 2],
+            ['tag_id' => 6, 'taggable_type' => Post::class, 'taggable_id' => 2],
+        ]);
+
+        Model::reguard();
     }
 }
