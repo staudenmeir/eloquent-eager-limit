@@ -20,7 +20,7 @@ Supports Laravel 5.5.29+.
  
 ## Installation
 
-    composer require staudenmeir/eloquent-eager-limit
+    composer require staudenmeir/eloquent-eager-limit:"^1.2"
 
 ## Usage
 
