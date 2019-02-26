@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany as Base;
 
 class MorphToMany extends Base
 {
-    use HasLimit;
+    use BelongsOrMorphToMany;
 }

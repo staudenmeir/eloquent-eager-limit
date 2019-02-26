@@ -46,12 +46,6 @@ class BuilderTest extends TestCase
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select * from `posts` order by `user_id` asc) as laravel_table having laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
-
-        $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.7.9');
-        $builder->select('roles.*, role_user.user_id as pivot_user_id')->from('posts')->join('role_user', 'roles.id', '=', 'role_user.role_id')->latest()->groupLimit(10, 'role_user.user_id');
-        $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `pivot_user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `pivot_user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select `roles`.`*, role_user`.`user_id` as `pivot_user_id` from `posts` inner join `role_user` on `roles`.`id` = `role_user`.`role_id` order by `role_user`.`user_id` asc, `created_at` desc) as laravel_table having laravel_row <= 10 order by laravel_row';
-        $this->assertEquals($expected, $builder->toSql());
     }
 
     public function testGroupLimitMariaDb()

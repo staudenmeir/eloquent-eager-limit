@@ -14,6 +14,7 @@ use Staudenmeir\EloquentEagerLimit\Relations\BelongsToMany;
 use Staudenmeir\EloquentEagerLimit\Relations\HasMany;
 use Staudenmeir\EloquentEagerLimit\Relations\HasManyThrough;
 use Staudenmeir\EloquentEagerLimit\Relations\HasOne;
+use Staudenmeir\EloquentEagerLimit\Relations\HasOneThrough;
 use Staudenmeir\EloquentEagerLimit\Relations\MorphMany;
 use Staudenmeir\EloquentEagerLimit\Relations\MorphOne;
 use Staudenmeir\EloquentEagerLimit\Relations\MorphToMany;
@@ -71,6 +72,23 @@ trait HasEagerLimit
     protected function newHasOne(Builder $query, Model $parent, $foreignKey, $localKey)
     {
         return new HasOne($query, $parent, $foreignKey, $localKey);
+    }
+
+    /**
+     * Instantiate a new HasOneThrough relationship.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Model  $farParent
+     * @param  \Illuminate\Database\Eloquent\Model  $throughParent
+     * @param  string  $firstKey
+     * @param  string  $secondKey
+     * @param  string  $localKey
+     * @param  string  $secondLocalKey
+     * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+     */
+    protected function newHasOneThrough(Builder $query, Model $farParent, Model $throughParent, $firstKey, $secondKey, $localKey, $secondLocalKey)
+    {
+        return new HasOneThrough($query, $farParent, $throughParent, $firstKey, $secondKey, $localKey, $secondLocalKey);
     }
 
     /**

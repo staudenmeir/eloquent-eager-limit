@@ -14,6 +14,19 @@ class MySqlGrammar extends Base
     }
 
     /**
+     * Determine whether to use a group limit clause for MySQL < 8.0.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @return bool
+     */
+    public function useLegacyGroupLimit(Builder $query)
+    {
+        $version = $query->getConnection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+        return version_compare($version, '8.0.11') < 0 && ! Str::contains($version, 'MariaDB');
+    }
+
+    /**
      * Compile a group limit clause.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -21,13 +34,9 @@ class MySqlGrammar extends Base
      */
     protected function compileGroupLimit(Builder $query)
     {
-        $version = $query->getConnection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
-
-        if (version_compare($version, '8.0.11') >= 0 || Str::contains($version, 'MariaDB')) {
-            return $this->compileGroupLimitParent($query);
-        }
-
-        return $this->compileLegacyGroupLimit($query);
+        return $this->useLegacyGroupLimit($query)
+            ? $this->compileLegacyGroupLimit($query)
+            : $this->compileGroupLimitParent($query);
     }
 
     /**
@@ -51,10 +60,6 @@ class MySqlGrammar extends Base
         }
 
         $column = Str::after($query->groupLimit['column'], '.');
-
-        if ($query->joins && Str::contains(end($query->columns), ' as pivot_')) {
-            $column = 'pivot_'.$column;
-        }
 
         $column = $this->wrap($column);
 

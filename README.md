@@ -47,7 +47,7 @@ $users = User::with(['posts' => function ($query) {
 }])->get();
 ```
 
-Improve the performance of `HasOne`/`MorphOne` relationships by applying `limit(1)`:
+Improve the performance of `HasOne`/`HasOneThrough`/`MorphOne` relationships by applying `limit(1)`:
 
 ```php
 class User extends Model
