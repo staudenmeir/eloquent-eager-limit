@@ -15,7 +15,7 @@ class SQLiteGrammar extends Base
     /**
      * Compile a group limit clause.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @return string
      */
     protected function compileGroupLimit(Builder $query)

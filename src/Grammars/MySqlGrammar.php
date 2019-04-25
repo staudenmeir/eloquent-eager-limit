@@ -16,20 +16,20 @@ class MySqlGrammar extends Base
     /**
      * Determine whether to use a group limit clause for MySQL < 8.0.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @return bool
      */
     public function useLegacyGroupLimit(Builder $query)
     {
         $version = $query->getConnection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
 
-        return version_compare($version, '8.0.11') < 0 && ! Str::contains($version, 'MariaDB');
+        return version_compare($version, '8.0.11') < 0 && !Str::contains($version, 'MariaDB');
     }
 
     /**
      * Compile a group limit clause.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @return string
      */
     protected function compileGroupLimit(Builder $query)
@@ -44,7 +44,7 @@ class MySqlGrammar extends Base
      *
      * Derived from https://softonsofa.com/tweaking-eloquent-relations-how-to-get-n-related-models-per-parent/.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @return string
      */
     protected function compileLegacyGroupLimit(Builder $query)

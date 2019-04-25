@@ -7,7 +7,7 @@ trait HasLimit
     /**
      * Alias to set the "limit" value of the query.
      *
-     * @param  int  $value
+     * @param int $value
      * @return $this
      */
     public function take($value)
@@ -18,7 +18,7 @@ trait HasLimit
     /**
      * Set the "limit" value of the query.
      *
-     * @param  int  $value
+     * @param int $value
      * @return $this
      */
     public function limit($value)

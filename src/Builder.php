@@ -16,8 +16,8 @@ class Builder extends Base
     /**
      * Add a "group limit" clause to the query.
      *
-     * @param  int  $value
-     * @param  string  $column
+     * @param int $value
+     * @param string $column
      * @return $this
      */
     public function groupLimit($value, $column)
@@ -32,14 +32,14 @@ class Builder extends Base
     /**
      * Execute the query as a "select" statement.
      *
-     * @param  array  $columns
+     * @param array $columns
      * @return \Illuminate\Support\Collection
      */
     public function get($columns = ['*'])
     {
         $items = parent::get($columns);
 
-        if (! $this->groupLimit) {
+        if (!$this->groupLimit) {
             return $items;
         }
 

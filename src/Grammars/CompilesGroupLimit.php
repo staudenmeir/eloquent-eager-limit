@@ -9,7 +9,7 @@ trait CompilesGroupLimit
     /**
      * Compile a select query into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @return string
      */
     public function compileSelect(Builder $query)
@@ -28,7 +28,7 @@ trait CompilesGroupLimit
     /**
      * Compile a group limit clause.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @return string
      */
     protected function compileGroupLimit(Builder $query)
@@ -63,8 +63,8 @@ trait CompilesGroupLimit
     /**
      * Compile a row number clause.
      *
-     * @param  string  $partition
-     * @param  string  $orders
+     * @param string $partition
+     * @param string $orders
      * @return string
      */
     protected function compileRowNumber($partition, $orders)

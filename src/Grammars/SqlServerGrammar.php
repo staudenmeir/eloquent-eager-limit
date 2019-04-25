@@ -13,8 +13,8 @@ class SqlServerGrammar extends Base
     /**
      * Compile a row number clause.
      *
-     * @param  string  $partition
-     * @param  string  $orders
+     * @param string $partition
+     * @param string $orders
      * @return string
      */
     protected function compileRowNumber($partition, $orders)
