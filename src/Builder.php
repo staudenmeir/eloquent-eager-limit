@@ -37,10 +37,10 @@ class Builder extends Base
      */
     public function get($columns = ['*'])
     {
-        $results = parent::get($columns);
+        $items = parent::get($columns);
 
         if (! $this->groupLimit) {
-            return $results;
+            return $items;
         }
 
         $column = last(explode('.', $this->groupLimit['column']));
@@ -51,10 +51,10 @@ class Builder extends Base
             '@laravel_partition := '.$this->grammar->wrap('pivot_'.$column),
         ];
 
-        foreach ($results as $result) {
-            unset($result->{$keys[0]}, $result->{$keys[1]}, $result->{$keys[2]});
+        foreach ($items as $item) {
+            unset($item->{$keys[0]}, $item->{$keys[1]}, $item->{$keys[2]});
         }
 
-        return $results;
+        return $items;
     }
 }
