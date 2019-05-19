@@ -13,7 +13,7 @@ Supports Laravel 5.5.29+.
 ## Compatibility
 
 - **MySQL 5.5+**
-- **MariaDB 10.2+**: Due to a [bug](https://jira.mariadb.org/projects/MDEV/issues/MDEV-17525) in MariaDB, the package only works with strict mode disabled.  
+- **MariaDB 10.2+**: Due to a [bug](https://jira.mariadb.org/browse/MDEV-17785) in MariaDB, the package only works with strict mode disabled.  
   In your `config/database.php` file, set `'strict' => false,` for the MariaDB connection.
 - **PostgreSQL 9.3+**
 - **SQLite 3.25+**: The limit is ignored on older versions of SQLite. This way, your application tests still work.
