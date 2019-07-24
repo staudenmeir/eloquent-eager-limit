@@ -59,7 +59,7 @@ class MySqlGrammar extends Base
             $query->offset = null;
         }
 
-        $column = Str::after($query->groupLimit['column'], '.');
+        $column = explode('.', $query->groupLimit['column'])[substr_count($query->groupLimit['column'], '.')];
 
         $column = $this->wrap($column);
 
@@ -86,7 +86,6 @@ class MySqlGrammar extends Base
         }
 
         return $sql.' order by laravel_row';
-
 
     }
 }
