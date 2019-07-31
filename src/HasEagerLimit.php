@@ -43,7 +43,8 @@ trait HasEagerLimit
      * @param \Illuminate\Database\Connection $connection
      * @return \Illuminate\Database\Query\Grammars\Grammar
      */
-    protected function getQueryGrammar(Connection $connection) {
+    protected function getQueryGrammar(Connection $connection)
+    {
         $driver = $connection->getDriverName();
 
         switch ($driver) {

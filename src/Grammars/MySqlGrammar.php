@@ -86,6 +86,5 @@ class MySqlGrammar extends Base
         }
 
         return $sql.' order by laravel_row';
-
     }
 }
