@@ -50,7 +50,7 @@ class MySqlGrammar extends Base
             $query->offset = null;
         }
 
-        $column = Str::after($query->groupLimit['column'], '.');
+        $column = last(explode('.', $query->groupLimit['column']));
 
         if ($query->joins && Str::contains(end($query->columns), ' as pivot_')) {
             $column = 'pivot_'.$column;
