@@ -25,7 +25,7 @@ trait BelongsOrMorphToMany
             $grammar = $this->query->getQuery()->getGrammar();
 
             if ($grammar instanceof MySqlGrammar && $grammar->useLegacyGroupLimit($this->query->getQuery())) {
-                $column = 'pivot_'.Str::after($column, '.');
+                $column = 'pivot_'.last(explode('.', $column));
             }
 
             $this->query->groupLimit($value, $column);

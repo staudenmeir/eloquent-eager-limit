@@ -59,7 +59,7 @@ class MySqlGrammar extends Base
             $query->offset = null;
         }
 
-        $column = explode('.', $query->groupLimit['column'])[substr_count($query->groupLimit['column'], '.')];
+        $column = last(explode('.', $query->groupLimit['column']));
 
         $column = $this->wrap($column);
 
