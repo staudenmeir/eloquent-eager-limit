@@ -91,3 +91,7 @@ $users = User::with(['posts' => function ($query) {
     $query->latest()->offset(5)->limit(10);
 }])->get();
 ```
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE OF CONDUCT](CODE_OF_CONDUCT.md) for details.
