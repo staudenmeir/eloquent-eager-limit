@@ -2,8 +2,7 @@
 
 namespace Staudenmeir\EloquentEagerLimit\Relations;
 
-use Illuminate\Support\Str;
-use Staudenmeir\EloquentEagerLimit\Grammars\MySqlGrammar;
+use Illuminate\Database\Query\Grammars\MySqlGrammar;
 
 trait BelongsOrMorphToMany
 {

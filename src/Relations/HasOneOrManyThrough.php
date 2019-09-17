@@ -2,7 +2,7 @@
 
 namespace Staudenmeir\EloquentEagerLimit\Relations;
 
-use Staudenmeir\EloquentEagerLimit\Grammars\MySqlGrammar;
+use Illuminate\Database\Query\Grammars\MySqlGrammar;
 
 trait HasOneOrManyThrough
 {
