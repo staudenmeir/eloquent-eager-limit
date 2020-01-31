@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/staudenmeir/eloquent-eager-limit.svg?branch=master)](https://travis-ci.org/staudenmeir/eloquent-eager-limit)
+![CI](https://github.com/staudenmeir/eloquent-eager-limit/workflows/CI/badge.svg)
 [![Code Coverage](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/v/stable)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit)
