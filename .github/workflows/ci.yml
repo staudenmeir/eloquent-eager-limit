@@ -9,16 +9,36 @@ jobs:
     strategy:
       matrix:
         php: [7.4, 7.3, 7.2]
+        mysql: [5.7, 5.6, 5.5]
         database: [mysql, pgsql, sqlite, sqlsrv]
         release: [stable, lowest]
         include: 
           - php: 7.4
             release: stable 
             coverage: xdebug
-    
+        exclude:
+          - database: pgsql
+            mysql: 5.7
+          - database: sqlite
+            mysql: 5.7
+          - database: sqlsrv
+            mysql: 5.7
+          - database: pgsql
+            mysql: 5.6
+          - database: sqlite
+            mysql: 5.6
+          - database: sqlsrv
+            mysql: 5.6
+          - database: pgsql
+            mysql: 5.5
+          - database: sqlite
+            mysql: 5.5
+          - database: sqlsrv
+            mysql: 5.5
+
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:${{ matrix.mysql }}
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: test
