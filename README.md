@@ -12,7 +12,9 @@ Supports Laravel 5.5.29+.
 
 ## Compatibility
 
-- **MySQL 5.5+**
+- **MySQL 5.7+**
+- **MySQL 5.5~5.6**: Due to a bug in MySQL, the package only works with strict mode disabled.  
+  In your `config/database.php` file, set `'strict' => false,` for the MySQL connection.
 - **MariaDB 10.2+**: Due to a [bug](https://jira.mariadb.org/browse/MDEV-17785) in MariaDB, the package only works with strict mode disabled.  
   In your `config/database.php` file, set `'strict' => false,` for the MariaDB connection.
 - **PostgreSQL 9.3+**
