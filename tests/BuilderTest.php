@@ -135,7 +135,7 @@ class BuilderTest extends TestCase
     protected function getBuilder($database)
     {
         $connection = $this->createMock(Connection::class);
-        $connection->method('getPdo')->willReturn($this->createMock(PDO::class));
+        $connection->method('getReadPdo')->willReturn($this->createMock(PDO::class));
         $grammar = 'Staudenmeir\EloquentEagerLimit\Grammars\\'.$database.'Grammar';
         $processor = $this->createMock(Processor::class);
 
