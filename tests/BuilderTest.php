@@ -12,37 +12,37 @@ class BuilderTest extends TestCase
     public function testGroupLimitMySql()
     {
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.11');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('8.0.11');
         $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.11');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('8.0.11');
         $builder->select('id', 'user_id')->from('posts')->latest()->groupLimit(10, 'user_id');
         $expected = 'select * from (select `id`, `user_id`, row_number() over (partition by `user_id` order by `created_at` desc) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('8.0.11');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('8.0.11');
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.7.9');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.7.9');
         $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select * from `posts` order by `user_id` asc) as laravel_table having laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.7.9');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.7.9');
         $builder->select('id', 'user_id')->from('posts')->latest()->groupLimit(10, 'posts.user_id');
         $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select `id`, `user_id` from `posts` order by `posts`.`user_id` asc, `created_at` desc) as laravel_table having laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.7.9');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.7.9');
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select * from `posts` order by `user_id` asc) as laravel_table having laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
@@ -51,19 +51,19 @@ class BuilderTest extends TestCase
     public function testGroupLimitMariaDb()
     {
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
         $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
         $builder->select('id', 'user_id')->from('posts')->latest()->groupLimit(10, 'user_id');
         $expected = 'select * from (select `id`, `user_id`, row_number() over (partition by `user_id` order by `created_at` desc) as laravel_row from `posts`) as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
@@ -90,25 +90,25 @@ class BuilderTest extends TestCase
     public function testGroupLimitSQLite()
     {
         $builder = $this->getBuilder('SQLite');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('3.25.0');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('3.25.0');
         $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from (select *, row_number() over (partition by "user_id") as laravel_row from "posts") as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('SQLite');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('3.25.0');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('3.25.0');
         $builder->select('id', 'user_id')->from('posts')->latest()->groupLimit(10, 'user_id');
         $expected = 'select * from (select "id", "user_id", row_number() over (partition by "user_id" order by "created_at" desc) as laravel_row from "posts") as laravel_table where laravel_row <= 10 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('SQLite');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('3.25.0');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('3.25.0');
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select * from (select *, row_number() over (partition by "user_id") as laravel_row from "posts") as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('SQLite');
-        $builder->getConnection()->getPdo()->method('getAttribute')->willReturn('3.24.0');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('3.24.0');
         $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select * from "posts"';
         $this->assertEquals($expected, $builder->toSql());
@@ -135,7 +135,7 @@ class BuilderTest extends TestCase
     protected function getBuilder($database)
     {
         $connection = $this->createMock(Connection::class);
-        $connection->method('getPdo')->willReturn($this->createMock(PDO::class));
+        $connection->method('getReadPdo')->willReturn($this->createMock(PDO::class));
         $grammar = 'Staudenmeir\EloquentEagerLimit\Grammars\\'.$database.'Grammar';
         $processor = $this->createMock(Processor::class);
 
