@@ -20,7 +20,7 @@ class SQLiteGrammar extends Base
      */
     protected function compileGroupLimit(Builder $query)
     {
-        $version = $query->getConnection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $version = $query->getConnection()->getReadPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
 
         if (version_compare($version, '3.25.0') >= 0) {
             return $this->compileGroupLimitParent($query);
