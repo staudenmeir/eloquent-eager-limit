@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       matrix:
@@ -45,12 +45,6 @@ jobs:
           tools: pecl
           extensions: bcmath, ctype, json, mbstring, openssl, pdo, pdo_${{ matrix.database }}, tokenizer, xml
           coverage: ${{ matrix.coverage }}
-      - run: |
-          PHP_API=$(php -i | sed -n 's/PHP API => //p')
-          SQLITE=$(wget -qO- https://github.com/staudenmeir/php-sqlite/raw/master/LATEST)
-          sudo wget -q https://github.com/staudenmeir/php-sqlite/raw/master/$SQLITE/libsqlite3.so -O /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
-          sudo wget -q https://github.com/staudenmeir/php-sqlite/raw/master/$SQLITE/${{ matrix.php }}/pdo_sqlite.so -O /usr/lib/php/$PHP_API/pdo_sqlite.so
-        if: matrix.database == 'sqlite'
       - run: |
           curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
           curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2017.list | sudo tee /etc/apt/sources.list.d/mssql-server-2017.list
