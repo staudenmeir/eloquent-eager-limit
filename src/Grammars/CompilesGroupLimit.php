@@ -33,7 +33,9 @@ trait CompilesGroupLimit
      */
     protected function compileGroupLimit(Builder $query)
     {
-        $query->setBindings($query->getRawBindings()['order'], 'select');
+        $selectBindings = array_merge($query->getRawBindings()['select'], $query->getRawBindings()['order']);
+
+        $query->setBindings($selectBindings, 'select');
         $query->setBindings([], 'order');
 
         $limit = (int) $query->groupLimit['value'];
