@@ -30,6 +30,13 @@ class BuilderTest extends TestCase
         $this->assertEquals($expected, $builder->toSql());
 
         $builder = $this->getBuilder('MySql');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('8.0.11');
+        $builder->from('posts')->groupLimit(10, 'user_id')->offset(1)->where('id', '>', 'where-binding')->orderByRaw('?', ['order-binding']);
+        $expected = 'select * from (select *, row_number() over (partition by `user_id` order by ?) as laravel_row from `posts` where `id` > ?) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
+        $this->assertEquals($expected, $builder->toSql());
+        $this->assertEquals(['order-binding', 'where-binding'], $builder->getBindings());
+
+        $builder = $this->getBuilder('MySql');
         $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.7.9');
         $builder->from('posts')->groupLimit(10, 'user_id');
         $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select * from `posts` order by `user_id` asc) as laravel_table having laravel_row <= 10 order by laravel_row';
@@ -46,6 +53,13 @@ class BuilderTest extends TestCase
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select * from `posts` order by `user_id` asc) as laravel_table having laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
+
+        $builder = $this->getBuilder('MySql');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.7.9');
+        $builder->from('posts')->groupLimit(10, 'user_id')->offset(1)->where('id', '>', 'where-binding')->orderByRaw('?', ['order-binding']);
+        $expected = 'select laravel_table.*, @laravel_row := if(@laravel_partition = `user_id`, @laravel_row + 1, 1) as laravel_row, @laravel_partition := `user_id` from (select @laravel_row := 0, @laravel_partition := 0) as laravel_vars, (select * from `posts` where `id` > ? order by `user_id` asc, ?) as laravel_table having laravel_row <= 11 and laravel_row > 1 order by laravel_row';
+        $this->assertEquals($expected, $builder->toSql());
+        $this->assertEquals(['where-binding', 'order-binding'], $builder->getBindings());
     }
 
     public function testGroupLimitMariaDb()
@@ -67,6 +81,13 @@ class BuilderTest extends TestCase
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select * from (select *, row_number() over (partition by `user_id`) as laravel_row from `posts`) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
+
+        $builder = $this->getBuilder('MySql');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('5.5.5-10.3.9-MariaDB');
+        $builder->from('posts')->groupLimit(10, 'user_id')->offset(1)->where('id', '>', 'where-binding')->orderByRaw('?', ['order-binding']);
+        $expected = 'select * from (select *, row_number() over (partition by `user_id` order by ?) as laravel_row from `posts` where `id` > ?) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
+        $this->assertEquals($expected, $builder->toSql());
+        $this->assertEquals(['order-binding', 'where-binding'], $builder->getBindings());
     }
 
     public function testGroupLimitPostgres()
@@ -85,6 +106,12 @@ class BuilderTest extends TestCase
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select * from (select *, row_number() over (partition by "user_id") as laravel_row from "posts") as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
+
+        $builder = $this->getBuilder('Postgres');
+        $builder->from('posts')->groupLimit(10, 'user_id')->offset(1)->where('id', '>', 'where-binding')->orderByRaw('?', ['order-binding']);
+        $expected = 'select * from (select *, row_number() over (partition by "user_id" order by ?) as laravel_row from "posts" where "id" > ?) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
+        $this->assertEquals($expected, $builder->toSql());
+        $this->assertEquals(['order-binding', 'where-binding'], $builder->getBindings());
     }
 
     public function testGroupLimitSQLite()
@@ -106,6 +133,13 @@ class BuilderTest extends TestCase
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select * from (select *, row_number() over (partition by "user_id") as laravel_row from "posts") as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
+
+        $builder = $this->getBuilder('SQLite');
+        $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('3.25.0');
+        $builder->from('posts')->groupLimit(10, 'user_id')->offset(1)->where('id', '>', 'where-binding')->orderByRaw('?', ['order-binding']);
+        $expected = 'select * from (select *, row_number() over (partition by "user_id" order by ?) as laravel_row from "posts" where "id" > ?) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
+        $this->assertEquals($expected, $builder->toSql());
+        $this->assertEquals(['order-binding', 'where-binding'], $builder->getBindings());
 
         $builder = $this->getBuilder('SQLite');
         $builder->getConnection()->getReadPdo()->method('getAttribute')->willReturn('3.24.0');
@@ -130,6 +164,12 @@ class BuilderTest extends TestCase
         $builder->from('posts')->groupLimit(10, 'user_id')->offset(1);
         $expected = 'select * from (select *, row_number() over (partition by [user_id] order by (select 0)) as laravel_row from [posts]) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
         $this->assertEquals($expected, $builder->toSql());
+
+        $builder = $this->getBuilder('SqlServer');
+        $builder->from('posts')->groupLimit(10, 'user_id')->offset(1)->where('id', '>', 'where-binding')->orderByRaw('?', ['order-binding']);
+        $expected = 'select * from (select *, row_number() over (partition by [user_id] order by ?) as laravel_row from [posts] where [id] > ?) as laravel_table where laravel_row <= 11 and laravel_row > 1 order by laravel_row';
+        $this->assertEquals($expected, $builder->toSql());
+        $this->assertEquals(['order-binding', 'where-binding'], $builder->getBindings());
     }
 
     protected function getBuilder($database)
