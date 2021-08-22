@@ -179,6 +179,6 @@ class BuilderTest extends TestCase
         $grammar = 'Staudenmeir\EloquentEagerLimit\Grammars\\'.$database.'Grammar';
         $processor = $this->createMock(Processor::class);
 
-        return new Builder($connection, new $grammar, $processor);
+        return new Builder($connection, new $grammar(), $processor);
     }
 }

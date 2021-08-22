@@ -33,7 +33,9 @@ trait HasEagerLimit
         $grammar = $connection->withTablePrefix($this->getQueryGrammar($connection));
 
         return new \Staudenmeir\EloquentEagerLimit\Builder(
-            $connection, $grammar, $connection->getPostProcessor()
+            $connection,
+            $grammar,
+            $connection->getPostProcessor()
         );
     }
 
@@ -49,13 +51,13 @@ trait HasEagerLimit
 
         switch ($driver) {
             case 'mysql':
-                return new MySqlGrammar;
+                return new MySqlGrammar();
             case 'pgsql':
-                return new PostgresGrammar;
+                return new PostgresGrammar();
             case 'sqlite':
-                return new SQLiteGrammar;
+                return new SQLiteGrammar();
             case 'sqlsrv':
-                return new SqlServerGrammar;
+                return new SqlServerGrammar();
         }
 
         throw new RuntimeException('This database is not supported.'); // @codeCoverageIgnore
@@ -166,8 +168,16 @@ trait HasEagerLimit
      * @param string $relationName
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    protected function newBelongsToMany(Builder $query, Model $parent, $table, $foreignPivotKey, $relatedPivotKey,
-                                        $parentKey, $relatedKey, $relationName = null)
+    protected function newBelongsToMany(
+        Builder $query,
+        Model $parent,
+        $table,
+        $foreignPivotKey,
+        $relatedPivotKey,
+        $parentKey,
+        $relatedKey,
+        $relationName = null
+    )
     {
         return new BelongsToMany($query, $parent, $table, $foreignPivotKey, $relatedPivotKey, $parentKey, $relatedKey, $relationName);
     }
@@ -187,11 +197,30 @@ trait HasEagerLimit
      * @param bool $inverse
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    protected function newMorphToMany(Builder $query, Model $parent, $name, $table, $foreignPivotKey,
-                                      $relatedPivotKey, $parentKey, $relatedKey,
-                                      $relationName = null, $inverse = false)
+    protected function newMorphToMany(
+        Builder $query,
+        Model $parent,
+        $name,
+        $table,
+        $foreignPivotKey,
+        $relatedPivotKey,
+        $parentKey,
+        $relatedKey,
+        $relationName = null,
+        $inverse = false
+    )
     {
-        return new MorphToMany($query, $parent, $name, $table, $foreignPivotKey, $relatedPivotKey, $parentKey, $relatedKey,
-            $relationName, $inverse);
+        return new MorphToMany(
+            $query,
+            $parent,
+            $name,
+            $table,
+            $foreignPivotKey,
+            $relatedPivotKey,
+            $parentKey,
+            $relatedKey,
+            $relationName,
+            $inverse
+        );
     }
 }
