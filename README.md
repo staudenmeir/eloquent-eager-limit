@@ -25,6 +25,10 @@ Supports Laravel 5.5.29+.
 
     composer require staudenmeir/eloquent-eager-limit:"^1.0"
 
+Use this command if you are in PowerShell on Windows (e.g. in VS Code):
+
+    composer require staudenmeir/eloquent-eager-limit:"^^^^1.0"
+
 ## Usage
 
 Use the `HasEagerLimit` trait in both the parent and the related model and apply `limit()/take()` to your relationship:
