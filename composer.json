@@ -14,8 +14,7 @@
     },
     "require-dev": {
         "laravel/homestead": "^11.0|^12.0",
-        "phpunit/phpunit": "^9.5",
-        "scrutinizer/ocular": "^1.8"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
