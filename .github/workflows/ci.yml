@@ -69,5 +69,7 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
           PGSQL_PORT: ${{ job.services.pgsql.ports[5432] }}
           SQLSRV_PORT: ${{ job.services.sqlsrv.ports[1433] }}
-      - run: vendor/bin/ocular code-coverage:upload --format=php-clover coverage.xml
+      - run: |
+          composer global require scrutinizer/ocular
+          ocular code-coverage:upload --format=php-clover coverage.xml
         if: matrix.coverage == 'xdebug'
