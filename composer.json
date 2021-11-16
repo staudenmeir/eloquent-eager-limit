@@ -13,7 +13,6 @@
         "illuminate/database": "^8.0"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^7.4",
         "phpunit/phpunit": "^9.3"
     },
     "autoload": {
