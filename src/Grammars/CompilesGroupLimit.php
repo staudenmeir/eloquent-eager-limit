@@ -48,6 +48,14 @@ trait CompilesGroupLimit
             $query->offset = null;
         }
 
+        if ($query->distinct) {
+            $groupBy = is_array($query->distinct)
+                ? $query->distinct
+                : $query->joins[0]->wheres[0]['second'];
+
+            $query->groupBy($groupBy);
+        }
+
         $components = $this->compileComponents($query);
 
         $components['columns'] .= $this->compileRowNumber($query->groupLimit['column'], $components['orders'] ?? '');
