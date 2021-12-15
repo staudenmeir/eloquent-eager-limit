@@ -7,6 +7,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use PHPUnit\Framework\TestCase as Base;
+use Tests\Models\City;
 use Tests\Models\Comment;
 use Tests\Models\Country;
 use Tests\Models\Post;
@@ -46,9 +47,20 @@ abstract class TestCase extends Base
             $table->timestamps();
         });
 
+        DB::schema()->create('cities', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+        });
+
         DB::schema()->create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('country_id');
+        });
+
+        DB::schema()->create('user_cities', function (Blueprint $table) {
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('city_id');
+            $table->enum('association', ['residence', 'birthplace']);
         });
 
         DB::schema()->create('posts', function (Blueprint $table) {
@@ -96,8 +108,18 @@ abstract class TestCase extends Base
         Country::create();
         Country::create();
 
+        City::create();
+        City::create();
+
         User::create(['country_id' => 1]);
         User::create(['country_id' => 2]);
+
+        DB::table('user_cities')->insert([
+            ['user_id' => 1, 'city_id' => 1, 'association' => 'birthplace'],
+            ['user_id' => 1, 'city_id' => 2, 'association' => 'residence'],
+            ['user_id' => 2, 'city_id' => 1, 'association' => 'birthplace'],
+            ['user_id' => 2, 'city_id' => 1, 'association' => 'residence'],
+        ]);
 
         Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:01')]);
         Post::create(['user_id' => 1, 'created_at' => new Carbon('2018-01-01 00:00:02')]);

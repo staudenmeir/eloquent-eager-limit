@@ -38,4 +38,12 @@ class BelongsToManyTest extends TestCase
         $this->assertEquals([6, 5], $users[1]->roles->pluck('id')->all());
         $this->assertArrayNotHasKey('@laravel_partition := `pivot_user_id`', $users[0]->roles[0]);
     }
+
+    public function testDistinct()
+    {
+        $users = User::with('cities')->get();
+
+        $this->assertEquals(2, $users[0]->cities->count());
+        $this->assertEquals(1, $users[1]->cities->count());
+    }
 }

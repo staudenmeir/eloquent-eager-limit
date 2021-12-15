@@ -6,6 +6,11 @@ class User extends Model
 {
     public $timestamps = false;
 
+    public function cities()
+    {
+        return $this->belongsToMany(City::class, 'user_cities')->limit(2)->distinct();
+    }
+
     public function post()
     {
         return $this->hasOne(Post::class)->latest()->limit(1);
