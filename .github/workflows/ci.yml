@@ -12,7 +12,7 @@ jobs:
         database: [mysql, pgsql, sqlite, sqlsrv]
         release: [stable, lowest]
         include:
-          - php: 8.0
+          - php: 8.1
             release: stable
             coverage: xdebug
 
