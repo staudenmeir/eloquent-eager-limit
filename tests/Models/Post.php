@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Models;
+namespace Staudenmeir\EloquentEagerLimit\Tests\Models;
 
 class Post extends Model
 {

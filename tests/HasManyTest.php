@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Staudenmeir\EloquentEagerLimit\Tests;
 
-use Tests\Models\User;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\User;
 
 class HasManyTest extends TestCase
 {

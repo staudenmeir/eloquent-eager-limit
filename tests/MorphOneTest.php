@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Staudenmeir\EloquentEagerLimit\Tests;
 
-use Tests\Models\Post;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\Post;
 
 class MorphOneTest extends TestCase
 {

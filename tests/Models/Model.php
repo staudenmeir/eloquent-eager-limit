@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Models;
+namespace Staudenmeir\EloquentEagerLimit\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model as Base;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;

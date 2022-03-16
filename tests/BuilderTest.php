@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Staudenmeir\EloquentEagerLimit\Tests;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Processors\Processor;

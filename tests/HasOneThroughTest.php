@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Staudenmeir\EloquentEagerLimit\Tests;
 
-use Tests\Models\Country;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\Country;
 
 class HasOneThroughTest extends TestCase
 {

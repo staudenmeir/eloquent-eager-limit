@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests;
+namespace Staudenmeir\EloquentEagerLimit\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use PHPUnit\Framework\TestCase as Base;
-use Tests\Models\Comment;
-use Tests\Models\Country;
-use Tests\Models\Post;
-use Tests\Models\Role;
-use Tests\Models\Tag;
-use Tests\Models\User;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\Comment;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\Country;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\Post;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\Role;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\Tag;
+use Staudenmeir\EloquentEagerLimit\Tests\Models\User;
 
 abstract class TestCase extends Base
 {

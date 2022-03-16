@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Models;
+namespace Staudenmeir\EloquentEagerLimit\Tests\Models;
 
 class Tag extends Model
 {
+    //
 }

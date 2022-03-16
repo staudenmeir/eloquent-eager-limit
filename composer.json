@@ -22,9 +22,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Staudenmeir\\EloquentEagerLimit\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable" : true
+    "prefer-stable": true
 }
