@@ -6,7 +6,9 @@
 [![License](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/license)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit)
 
 ## Introduction
-This Laravel Eloquent extension allows limiting the number of eager loading results per parent using [window functions](https://en.wikipedia.org/wiki/Select_(SQL)#Limiting_result_rows).
+
+This Laravel Eloquent extension allows limiting the number of eager loading results per parent
+using [window functions](https://en.wikipedia.org/wiki/Select_(SQL)#Limiting_result_rows).
 
 Supports Laravel 5.5.29+.
 
@@ -19,7 +21,7 @@ Supports Laravel 5.5.29+.
 - **PostgreSQL 9.3+**
 - **SQLite 3.25+**: The limit is ignored on older versions of SQLite. This way, your application tests still work.
 - **SQL Server 2008+**
- 
+
 ## Installation
 
     composer require staudenmeir/eloquent-eager-limit:"^1.0"
@@ -74,7 +76,7 @@ class Post extends Model
 $users = User::with('latestPost')->get();
 ```
 
-You can also apply `offset()/skip()` to your relationship: 
+You can also apply `offset()/skip()` to your relationship:
 
 ```php
 class User extends Model
