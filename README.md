@@ -99,6 +99,15 @@ $users = User::with(['posts' => function ($query) {
 }])->get();
 ```
 
+#### Package Conflicts
+
+- `staudenmeir/laravel-adjacency-list`: Replace both packages
+  with [staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list)
+  to use them on the same model.
+- `staudenmeir/laravel-cte`: Replace both packages
+  with [staudenmeir/eloquent-eager-limit-x-laravel-cte](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-cte)
+  to use them on the same model.
+
 ## Contributing
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md) and [CODE OF CONDUCT](.github/CODE_OF_CONDUCT.md) for details.
