@@ -107,6 +107,9 @@ $users = User::with(['posts' => function ($query) {
 - `staudenmeir/laravel-cte`: Replace both packages
   with [staudenmeir/eloquent-eager-limit-x-laravel-cte](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-cte)
   to use them on the same model.
+- `topclaudy/compoships`: Replace both packages
+  with [mpyw/compoships-eager-limit](https://github.com/mpyw/compoships-eager-limit)
+  to use them on the same model.
 
 ## Contributing
 
