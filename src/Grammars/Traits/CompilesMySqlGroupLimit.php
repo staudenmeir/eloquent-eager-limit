@@ -3,7 +3,6 @@
 namespace Staudenmeir\EloquentEagerLimit\Grammars\Traits;
 
 use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Str;
 use PDO;
 
 trait CompilesMySqlGroupLimit
@@ -22,7 +21,7 @@ trait CompilesMySqlGroupLimit
     {
         $version = $query->getConnection()->getReadPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
 
-        return version_compare($version, '8.0.11') < 0 && !Str::contains($version, 'MariaDB');
+        return version_compare($version, '8.0.11') < 0 && !str_contains($version, 'MariaDB');
     }
 
     /**
