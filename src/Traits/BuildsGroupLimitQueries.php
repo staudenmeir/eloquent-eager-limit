@@ -41,16 +41,19 @@ trait BuildsGroupLimitQueries
             return $items;
         }
 
-        $column = last(explode('.', $this->groupLimit['column']));
+        $keys = ['laravel_row'];
 
-        $keys = [
-            'laravel_row',
-            '@laravel_partition := '.$this->grammar->wrap($column),
-            '@laravel_partition := '.$this->grammar->wrap('pivot_'.$column),
-        ];
+        if (is_string($this->groupLimit['column'])) {
+            $column = last(explode('.', $this->groupLimit['column']));
+
+            $keys[] = '@laravel_partition := '.$this->grammar->wrap($column);
+            $keys[] = '@laravel_partition := '.$this->grammar->wrap('pivot_'.$column);
+        }
 
         foreach ($items as $item) {
-            unset($item->{$keys[0]}, $item->{$keys[1]}, $item->{$keys[2]});
+            foreach ($keys as $key) {
+                unset($item->$key);
+            }
         }
 
         return $items;
