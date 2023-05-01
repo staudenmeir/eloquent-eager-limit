@@ -44,6 +44,7 @@ trait HasEagerLimit
 
         switch ($driver) {
             case 'mysql':
+            case 'mariadb':                
                 return new MySqlGrammar();
             case 'pgsql':
                 return new PostgresGrammar();
