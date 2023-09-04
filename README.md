@@ -1,11 +1,11 @@
-![CI](https://github.com/staudenmeir/eloquent-eager-limit/workflows/CI/badge.svg)
+# Eloquent Eager Limit
+
+[![CI](https://github.com/staudenmeir/eloquent-eager-limit/actions/workflows/ci.yml/badge.svg)](https://github.com/staudenmeir/eloquent-eager-limit/actions/workflows/ci.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/v/stable)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit)
-[![Total Downloads](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/downloads)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit)
-[![License](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/license)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit)
-
-## Introduction
+[![Total Downloads](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/downloads)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit/stats)
+[![License](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/license)](https://github.com/staudenmeir/eloquent-eager-limit/blob/master/LICENSE)
 
 This Laravel Eloquent extension allows limiting the number of eager loading results per parent
 using [window functions](https://en.wikipedia.org/wiki/Select_(SQL)#Limiting_result_rows).
@@ -29,6 +29,19 @@ Supports Laravel 5.5.29+.
 Use this command if you are in PowerShell on Windows (e.g. in VS Code):
 
     composer require staudenmeir/eloquent-eager-limit:"^^^^1.0"
+
+## Versions
+
+| Laravel | Package |
+|:--------|:--------|
+| 10.x    | 1.8     |
+| 9.x     | 1.7     |
+| 8.x     | 1.6     |
+| 7.x     | 1.5     |
+| 6.x     | 1.4     |
+| 5.8     | 1.3     |
+| 5.5–5.7 | 1.2     |
+
 
 ## Usage
 
@@ -104,8 +117,8 @@ $users = User::with(['posts' => function ($query) {
 - `staudenmeir/laravel-adjacency-list`: Replace both packages
   with [staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list)
   to use them on the same model.
-- `staudenmeir/laravel-cte`: Replace both packages
-  with [staudenmeir/eloquent-eager-limit-x-laravel-cte](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-cte)
+- `staudenmeir/eloquent-eager-limit`: Replace both packages
+  with [staudenmeir/eloquent-eager-limit-x-eloquent-eager-limit](https://github.com/staudenmeir/eloquent-eager-limit-x-eloquent-eager-limit)
   to use them on the same model.
 - `topclaudy/compoships`: Replace both packages
   with [mpyw/compoships-eager-limit](https://github.com/mpyw/compoships-eager-limit)
