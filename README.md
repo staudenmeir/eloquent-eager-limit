@@ -42,7 +42,6 @@ Use this command if you are in PowerShell on Windows (e.g. in VS Code):
 | 5.8     | 1.3     |
 | 5.5–5.7 | 1.2     |
 
-
 ## Usage
 
 Use the `HasEagerLimit` trait in both the parent and the related model and apply `limit()/take()` to your relationship:
