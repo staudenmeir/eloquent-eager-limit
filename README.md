@@ -1,7 +1,7 @@
 # Eloquent Eager Limit
 
 [![CI](https://github.com/staudenmeir/eloquent-eager-limit/actions/workflows/ci.yml/badge.svg)](https://github.com/staudenmeir/eloquent-eager-limit/actions/workflows/ci.yml)
-[![Code Coverage](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/?branch=master)
+[![codecov](https://codecov.io/gh/staudenmeir/eloquent-eager-limit/graph/badge.svg?token=J8ysbd1r80)](https://codecov.io/gh/staudenmeir/eloquent-eager-limit)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/staudenmeir/eloquent-eager-limit/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/v/stable)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit)
 [![Total Downloads](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/downloads)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit/stats)
