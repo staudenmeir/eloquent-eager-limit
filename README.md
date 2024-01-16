@@ -7,10 +7,13 @@
 [![Total Downloads](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/downloads)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit/stats)
 [![License](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/license)](https://github.com/staudenmeir/eloquent-eager-limit/blob/master/LICENSE)
 
+> [!NOTE]
+> The package's code has been merged into Laravel 11+ and eager loading limits will be supported natively.
+
 This Laravel Eloquent extension allows limiting the number of eager loading results per parent
 using [window functions](https://en.wikipedia.org/wiki/Select_(SQL)#Limiting_result_rows).
 
-Supports Laravel 5.5.29+.
+Supports Laravel 5.5–10.
 
 ## Compatibility
 
@@ -116,8 +119,8 @@ $users = User::with(['posts' => function ($query) {
 - `staudenmeir/laravel-adjacency-list`: Replace both packages
   with [staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list)
   to use them on the same model.
-- `staudenmeir/eloquent-eager-limit`: Replace both packages
-  with [staudenmeir/eloquent-eager-limit-x-eloquent-eager-limit](https://github.com/staudenmeir/eloquent-eager-limit-x-eloquent-eager-limit)
+- `staudenmeir/laravel-cte`: Replace both packages
+  with [staudenmeir/eloquent-eager-limit-x-laravel-cte](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-cte)
   to use them on the same model.
 - `topclaudy/compoships`: Replace both packages
   with [mpyw/compoships-eager-limit](https://github.com/mpyw/compoships-eager-limit)
