@@ -50,7 +50,6 @@ trait HasEagerLimit
             default => throw new RuntimeException('This database is not supported.'), // @codeCoverageIgnore
         };
 
-        // TODO[L11]
         if (method_exists($grammar, 'setConnection')) {
             $grammar->setConnection($connection);
         }
