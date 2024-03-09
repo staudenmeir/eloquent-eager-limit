@@ -69,7 +69,7 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
           PGSQL_PORT: ${{ job.services.pgsql.ports[5432] }}
           SQLSRV_PORT: ${{ job.services.sqlsrv.ports[1433] }}
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         if: matrix.coverage == 'xdebug' && env.CODECOV_TOKEN
