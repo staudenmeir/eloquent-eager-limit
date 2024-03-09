@@ -7,7 +7,7 @@
 [![Total Downloads](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/downloads)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit/stats)
 [![License](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/license)](https://github.com/staudenmeir/eloquent-eager-limit/blob/master/LICENSE)
 
-> [!NOTE]
+> [!IMPORTANT]
 > The package's code has been merged into Laravel 11+ and eager loading limits are now supported natively.
 
 This Laravel Eloquent extension allows limiting the number of eager loading results per parent
