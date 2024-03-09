@@ -8,7 +8,7 @@
 [![License](https://poser.pugx.org/staudenmeir/eloquent-eager-limit/license)](https://github.com/staudenmeir/eloquent-eager-limit/blob/master/LICENSE)
 
 > [!NOTE]
-> The package's code has been merged into Laravel 11+ and eager loading limits will be supported natively.
+> The package's code has been merged into Laravel 11+ and eager loading limits are now supported natively.
 
 This Laravel Eloquent extension allows limiting the number of eager loading results per parent
 using [window functions](https://en.wikipedia.org/wiki/Select_(SQL)#Limiting_result_rows).
